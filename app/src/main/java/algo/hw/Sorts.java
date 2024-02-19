@@ -5,28 +5,52 @@ package algo.hw;
 import java.util.*;
 
 public class Sorts {
-    public static void printArray(int[] array){
-        for(int i = 0; i < array.length-1; i++) {
-            System.out.print(array[i] + ", ");
-        }
-        System.out.print(array[array.length -1]);
-    }
 
     public static void main(String[] args) {
-        int[] test = {4, 3, 6, 1, 3, 5, 4, 5, 5, 5};
-
         BubbleSort b = new BubbleSort();
-        //int[] bubble = b.sort(test);
 
         MergeSort m = new MergeSort();
-        int[] bubble = m.sort(test);
 
-        System.out.println("SORTED: ");
-        for(int i = 0; i < bubble.length-1; i++) {
-            System.out.print(bubble[i] + ", ");
+        String[][] mergeTotal = new String[60][3];
+        String[][] bubbleTotal = new String[60][3];
+
+        double[] sortTimesBubble50 = repeatedSort(50, 10, b);
+        bubbleTotal = updateAllTimes(bubbleTotal, sortTimesBubble50, 0, 50);
+        double[] sortTimesBubble100 = repeatedSort(100, 10, b);
+        bubbleTotal = updateAllTimes(bubbleTotal, sortTimesBubble100, 10, 100);
+        double[] sortTimesBubble500 = repeatedSort(500, 10, b);
+        bubbleTotal = updateAllTimes(bubbleTotal, sortTimesBubble500, 20, 500);
+        double[] sortTimesBubble1000 = repeatedSort(1000, 10, b);
+        bubbleTotal = updateAllTimes(bubbleTotal, sortTimesBubble1000, 30, 1000);
+        double[] sortTimesBubble5000 = repeatedSort(5000, 10, b);
+        bubbleTotal = updateAllTimes(bubbleTotal, sortTimesBubble5000, 40, 5000);
+        double[] sortTimesBubble10000 = repeatedSort(10000, 10, b);
+        bubbleTotal = updateAllTimes(bubbleTotal, sortTimesBubble10000, 50, 10000);
+
+        double[] sortTimesMerge50 = repeatedSort(50, 10, m);
+        mergeTotal = updateAllTimes(mergeTotal, sortTimesMerge50, 0, 50);
+        double[] sortTimesMerge100 = repeatedSort(100, 10, m);
+        mergeTotal = updateAllTimes(mergeTotal, sortTimesMerge100, 10, 100);
+        double[] sortTimesMerge500 = repeatedSort(500, 10, m);
+        mergeTotal = updateAllTimes(mergeTotal, sortTimesMerge500, 20, 500);
+        double[] sortTimesMerge1000 = repeatedSort(1000, 10, m);
+        mergeTotal = updateAllTimes(mergeTotal, sortTimesMerge1000, 30, 1000);
+        double[] sortTimesMerge5000 = repeatedSort(5000, 10, m);
+        mergeTotal = updateAllTimes(mergeTotal, sortTimesMerge5000, 40, 5000);
+        double[] sortTimesMerge10000 = repeatedSort(10000, 10, m);
+        mergeTotal = updateAllTimes(mergeTotal, sortTimesMerge10000, 50, 10000);
+
+        CSVhelper.processData(bubbleTotal, "Henry-Mitchell_bubblesort_times.csv");
+        CSVhelper.processData(mergeTotal, "Henry-Mitchell_mergeesort_times.csv");
+    }
+
+    public static String[][] updateAllTimes(String[][] allTimes, double[] vals, int index, int n) {
+        for(int i = 0; i < 10; i++) {
+            allTimes[index+i][0] = Double.toString(vals[i]);
+            allTimes[index+i][1] = Double.toString(i+1);
+            allTimes[index+i][2] = Double.toString(n);
         }
-        System.out.println(bubble[bubble.length -1]);
-        
+        return allTimes;
     }
 
     public static int[] randArray(int length) {
@@ -45,7 +69,7 @@ public class Sorts {
         double start = System.nanoTime();
         s.sort(arr);
         double stop = System.nanoTime();
-        return start-stop;
+        return stop - start;
     }
 
     public static double[] repeatedSort(int n, int k, SortAlgorithm s) {
