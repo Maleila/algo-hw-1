@@ -1,6 +1,8 @@
 package algo.hw;
 import java.util.Arrays;
 
+//Lu Henry-Mitchell
+
 public class MergeSort implements SortAlgorithm{
     @Override
     public int[] sort(int[] arr) {

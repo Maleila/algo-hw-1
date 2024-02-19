@@ -1,5 +1,7 @@
 package algo.hw;
 
+//Lu Henry-Mitchell
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,13 +13,13 @@ public class CSVhelper {
     }
 
     public static void processData(String[][] data, String output) {
-        String[] headers = {"N", "sample_num", "time_ns"};
+        String[] header = {"N", "sample_num", "time_ns"};
         String csvFile = output;
 
         // Write data to csv file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
-            // Write headers
-            writeLine(writer, headers);
+            // Add a header
+            writeLine(writer, header);
 
             for(int i = 0; i <data.length; i++){
                 String[] temp = data[i];
